@@ -11,6 +11,12 @@ let credentials = require('../../credentials');
 let lock = new Auth0Lock(credentials);
 
 export default class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      userToken: 'token',
+    };
+  }
 
   login() {
     lock.show({}, (err, profile, token) => {
@@ -18,8 +24,14 @@ export default class App extends Component {
         console.log(err);
         return;
       }
-      console.log('Logged in with Auth0!' + profile + token);
+      this.setState({ userToken: token });
+      console.log(this.state.userToken);
+      console.log(profile);
     });
+  }
+
+  logout() {
+    console.log('logout');
   }
 
   render() {
@@ -30,6 +42,9 @@ export default class App extends Component {
         </Text>
         <TouchableHighlight onPress={() => this.login()}>
           <Text>Login</Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={() => this.logout()}>
+          <Text>Logout</Text>
         </TouchableHighlight>
       </View>
     );
