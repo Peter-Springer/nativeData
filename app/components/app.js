@@ -1,72 +1,19 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableHighlight
-} from 'react-native';
+import { View, Text } from 'react-native';
+import { Router, Scene } from 'react-native-router-flux';
 
-import Auth0Lock from 'react-native-lock';
-let credentials = require('../../credentials');
-let lock = new Auth0Lock(credentials);
+import Login from './login';
+import Home from './home';
 
 export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userToken: 'token',
-    };
-  }
-
-  login() {
-    lock.show({}, (err, profile, token) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      this.setState({ userToken: token });
-      console.log(this.state.userToken);
-      console.log(profile);
-    });
-  }
-
-  logout() {
-    console.log('logout');
-  }
-
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          HELLO
-        </Text>
-        <TouchableHighlight onPress={() => this.login()}>
-          <Text>Login</Text>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={() => this.logout()}>
-          <Text>Logout</Text>
-        </TouchableHighlight>
-      </View>
-    );
+      <Router>
+        <Scene key="root">
+          <Scene key="login" component={Login} title="login" initial={true} />
+          <Scene key="home" component={Home} title="home"/>
+        </Scene>
+      </Router>
+    )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-    color: 'red',
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
