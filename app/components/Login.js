@@ -7,11 +7,11 @@ import {
   View,
 } from 'react-native';
 import Auth0Lock from 'react-native-lock';
-
 import credentials from '../../credentials';
 import Home from './Home';
+import fetchDataContainer from '../containers/fetchDataContainer';
 
-export default class Login extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -77,6 +77,10 @@ export default class Login extends Component {
     }
   }
 
+  getData() {
+    this.props.fetchAllData('hello')
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -89,13 +93,16 @@ export default class Login extends Component {
         <TouchableHighlight onPress={() => this.logout()}>
           <Text>Logout</Text>
         </TouchableHighlight>
-        <TouchableHighlight onPress={() => this.getItem()}>
+        <TouchableHighlight onPress={() => this.getData()}>
           <Text>AsyncStorage</Text>
         </TouchableHighlight>
+        <Text>{this.props.allData.allData}</Text>
       </View>
     );
   }
 }
+
+  export default fetchDataContainer(Login)
 
 const styles = StyleSheet.create({
   container: {
