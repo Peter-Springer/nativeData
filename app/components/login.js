@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Router, Scene } from 'react-native-router-flux';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import Auth0Lock from 'react-native-lock';
+import testContainer from '../containers/testContainer';
+import actionTwoContainer from '../containers/actionTwoContainer';
 let credentials = require('../../credentials');
 let lock = new Auth0Lock(credentials);
 
-export default class Login extends Component {
+ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,38 +14,33 @@ export default class Login extends Component {
     };
   }
 
-  login() {
-    lock.show({}, (err, profile, token) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      this.setState({ userToken: token });
-      console.log(this.state.userToken);
-      console.log(profile);
-    });
+  getHello() {
+    const data = '1232323'
+    this.props.sayHello(data);
+    this.goodbye();
   }
 
-  goToHomePage() {
-    return Actions.home({text: 'Hello World!'});
+  goodbye() {
+    this.props.sayGoodbye();
   }
 
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          HELLO
+        {this.props.greeting}
+        {this.props.pizzaType}
+        this is below
         </Text>
-        <TouchableHighlight onPress={() => this.login()}>
-          <Text>Login</Text>
-        </TouchableHighlight>
-        <TouchableHighlight>
-          <Text onPress={() => this.goToHomePage()}>This is the login page!</Text>
+        <TouchableHighlight onPress={() => this.getHello()}>
+          <Text>Click</Text>
         </TouchableHighlight>
       </View>
     );
   }
 }
+
+  export default testContainer(actionTwoContainer(Login))
 
 const styles = StyleSheet.create({
   container: {

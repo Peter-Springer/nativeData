@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import reducers from '../reducers/index';
 
-const store = createStore();
+const store = createStore(reducers);
 
 import App from '../components/app';
 

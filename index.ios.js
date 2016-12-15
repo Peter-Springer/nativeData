@@ -1,5 +1,5 @@
 'use strict';
 import { AppRegistry } from 'react-native';
-import App from './app/components/app';
+import Main from './app/containers/main';
 
-AppRegistry.registerComponent('nativeData', () => App);
+AppRegistry.registerComponent('nativeData', () => Main);
