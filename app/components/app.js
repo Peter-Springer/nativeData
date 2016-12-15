@@ -1,113 +1,95 @@
 import React, { Component } from 'react';
 import {
-  AsyncStorage,
+  Navigator,
   StyleSheet,
   Text,
   TouchableHighlight,
   View,
 } from 'react-native';
-import Auth0Lock from 'react-native-lock';
 
-import credentials from '../../credentials';
+import Login from './Login';
+import Home from './Home'
+
+const routes = [
+  { component: Login, title: 'Login In' },
+  { component: Home, title: 'Search Records' }
+]
 
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      userToken: null,
-      profile: null,
-      uid: 'uid904837920',
-
-    };
-  }
-
-  saveToken = async (token) => {
-    try {
-      await AsyncStorage.setItem(uid, token)
-    } catch (error) {
-      console.log(error);
-      return;
-    }
-  }
-
-  deleteToken = async () => {
-    try {
-      await AsyncStorage.removeItem(uid)
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  login() {
-    let lock = new Auth0Lock(credentials);
-    lock.show({}, (err, profile, token) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      let sessionToken = JSON.stringify(token.idToken)
-      this.saveToken(sessionToken);
-      this.setState({ userToken: token, profile: profile });
-    });
-  }
-
-  logout = async () => {
-    try {
-      await this.deleteToken()
-      this.setState({ userToken: null, profile: null, uid: Date.now() })
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  getItem = async () => {
-    try {
-      await AsyncStorage.getItem(uid, (err, result) => {
-        console.log(result);
-      })
-    } catch (error) {
-      console.log(error);
-    }
   }
 
   render() {
-    console.log(this.state.userToken)
-    console.log(this.state.profile)
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          HELLO
-        </Text>
-        <TouchableHighlight onPress={() => this.login()}>
-          <Text>Login</Text>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={() => this.logout()}>
-          <Text>Logout</Text>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={() => this.getItem()}>
-          <Text>AsyncStorage</Text>
-        </TouchableHighlight>
-      </View>
-    );
+    return(
+      <Navigator style={styles.navigator}
+        initialRoute={routes[0]}
+        initialRouteStack={routes}
+        renderScene={(route, navigator) => {
+          let RouteComponent = route.component;
+          return (
+            <RouteComponent {...route} navigator={navigator} />
+          )
+        }}
+        navigatorBar={
+          <Navigator.NavigationBar
+            style={ styles.nav }
+            routeMapper={NavigationBarRouteMapper} />
+        }
+      />
+    )
   }
 }
 
+let NavigationBarRouteMapper = {
+  LeftButton(route, navigator, index, navState) {
+    if(index > 0) {
+      return (
+        <TouchableHighlight onPress={() => navigator.pop()}>
+          <Text style={styles.prevButton}>Prev</Text>
+        </TouchableHighlight>
+      )
+    }
+    else { return null }
+  },
+
+  RightButton(route, navigator, index, navState) {
+    if(index > 0) {
+      return (
+        <TouchableHighlight onPress={() => navigator.push(routes[index + 1])}>
+          <Text style={styles.nextButton}>Next</Text>
+        </TouchableHighlight>
+      )
+    }
+    else { return null }
+  },
+
+  Title(route, navigator, index, navState) {
+    return <Text style={ styles.navTitle }>NFL Arrest</Text>
+  }
+
+};
+
 const styles = StyleSheet.create({
-  container: {
+  navigator: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-    color: 'red',
+  navTitle: {
+    marginTop:4,
+    fontSize:16,
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  prevButton: {
+    fontSize: 16,
+    marginLeft:15,
+    marginTop:2,
   },
+  nextButton: {
+    fontSize: 16,
+    marginRight:15,
+    marginTop:2,
+  },
+  nav: {
+    height: 50,
+    backgroundColor: '#1E77E2',
+  }
 });
