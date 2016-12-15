@@ -1,4 +1,3 @@
-'use strict'
 import { types } from './actionTypes';
 
 export const fetchData = {
