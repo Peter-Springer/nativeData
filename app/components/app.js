@@ -23,7 +23,6 @@ export default class App extends Component {
   }
 
   render() {
-    // const {}
       return (
         <Navigator style={styles.navigator}
           initialRoute={routes[0]}
