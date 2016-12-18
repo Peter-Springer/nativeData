@@ -17,8 +17,8 @@ class Home extends Component{
     super(props)
   }
 
-  nflData(arg) {
-    fetch(`http://nflarrest.com/api/v1/${arg}`, {method: "GET"})
+  nflData(arg1='', arg2='') {
+    fetch(`http://nflarrest.com/api/v1/team/${arg1}/${arg2}`, {method: "GET"})
       .then((response) => response.json())
       .then((responseJson) => {
         return this.props.fetchAllData(responseJson);
@@ -33,7 +33,7 @@ class Home extends Component{
     if (!data) {
       return (
         <View style={styles.container}>
-          <TouchableHighlight onPress={() => this.nflData('team')}>
+          <TouchableHighlight onPress={() => this.nflData()}>
             <Text>Get Data</Text>
           </TouchableHighlight>
         </View>
@@ -42,7 +42,7 @@ class Home extends Component{
       return (
         <View style={styles.container}>
           <Text>Home</Text>
-          <TouchableHighlight onPress={() => this.nflData()}>
+          <TouchableHighlight onPress={() => this.nflData('topPlayers', 'den')}>
             <Text>Get Data</Text>
           </TouchableHighlight>
           <ScrollView
