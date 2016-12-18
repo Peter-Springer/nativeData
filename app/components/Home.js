@@ -41,12 +41,17 @@ class Home extends Component{
       )
     } else {
       return (
-        console.log(data),
-        <View>
+        <View style={styles.container}>
           <Text>Home</Text>
           <TouchableHighlight onPress={() => this.nflData()}>
             <Text>Get Data</Text>
           </TouchableHighlight>
+          <ScrollView
+            style={styles.scrollView}>
+            {data.map(function(crime, i) {
+              return <CrimeByTeam key={i} crime={crime} />}
+            )}
+          </ScrollView>
         </View>
       )
     }

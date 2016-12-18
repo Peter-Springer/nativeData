@@ -15,9 +15,8 @@ export default class CrimeByTeam extends Component {
     const { crime } = this.props
     return (
       <View style={styles.crimeData}>
-        <Text>{crime.Team}</Text>
-        {/* <Text>{crime.Team_name}</Text>
-        <Text>{crime.arrest_count}</Text> */}
+        <Text>{crime.Team} {crime.Team_name}</Text>
+        <Text>Arrest Count: {crime.arrest_count}</Text>
       </View>
     )
   }
