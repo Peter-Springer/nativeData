@@ -7,6 +7,10 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
+import {
+  Select,
+  Option,
+} from 'react-native-chooser';
 
 import fetchDataContainer from '../containers/fetchDataContainer';
 import CrimeByTeam from './CrimeByTeam';
@@ -15,10 +19,18 @@ import CrimeByTeam from './CrimeByTeam';
 class Home extends Component{
   constructor(props) {
     super(props)
+    this.state = {
+      team: '',
+
+    }
   }
 
-  nflData(arg) {
-    fetch(`http://nflarrest.com/api/v1/${arg}`, {method: "GET"})
+  selectedTeam(teamName) {
+    this.setState({ team: teamName })
+  }
+
+  nflData(arg1='', arg2='') {
+    fetch(`http://nflarrest.com/api/v1/team/${arg1}/${arg2}`, {method: "GET"})
       .then((response) => response.json())
       .then((responseJson) => {
         return this.props.fetchAllData(responseJson);
@@ -32,8 +44,20 @@ class Home extends Component{
     let data = this.props.allData.allData
     if (!data) {
       return (
+        console.log(this.state),
         <View style={styles.container}>
-          <TouchableHighlight onPress={() => this.nflData('team')}>
+          <Select
+            onSelect={this.selectedTeam.bind(this)}
+            defaultText="Select A Team ..."
+            style = {{borderWidth : 1, borderColor : "green"}}
+            textStyle = {{}}
+            backdropStyle  = {{backgroundColor : "#d3d5d6"}}
+            optionListStyle = {{backgroundColor : "#F5FCFF"}}
+          >
+              <Option value={'den'}>Denver</Option>
+              <Option value={'sea'}>Seattle</Option>
+            </Select>
+          <TouchableHighlight onPress={() => this.nflData('topPlayers', this.state.team)}>
             <Text>Get Data</Text>
           </TouchableHighlight>
         </View>
@@ -42,7 +66,7 @@ class Home extends Component{
       return (
         <View style={styles.container}>
           <Text>Home</Text>
-          <TouchableHighlight onPress={() => this.nflData()}>
+          <TouchableHighlight onPress={() => this.nflData('topPlayers', this.state.team)}>
             <Text>Get Data</Text>
           </TouchableHighlight>
           <ScrollView

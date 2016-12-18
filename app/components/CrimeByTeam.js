@@ -16,6 +16,7 @@ export default class CrimeByTeam extends Component {
     return (
       <View style={styles.crimeData}>
         <Text>{crime.Team} {crime.Team_name}</Text>
+        <Text>{crime.Name}</Text>
         <Text>Arrest Count: {crime.arrest_count}</Text>
       </View>
     )
