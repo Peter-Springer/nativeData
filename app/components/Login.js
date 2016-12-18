@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
-import {
-  AsyncStorage,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  View,
-} from 'react-native';
+import { AsyncStorage, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
 import Auth0Lock from 'react-native-lock';
 import credentials from '../../credentials';
-import Home from './Home';
+import Profile from './Profile';
 import fetchDataContainer from '../containers/fetchDataContainer';
+import getUserContainer from '../containers/getUserContainer';
 
 class Login extends Component {
   constructor(props) {
@@ -22,16 +17,17 @@ class Login extends Component {
     };
   }
 
-  saveToken = async (token) => {
+  saveProfile = async (profile) => {
+      let userProfile = JSON.stringify(profile)
     try {
-      await AsyncStorage.setItem(this.state.uid, token)
+      await AsyncStorage.setItem(this.state.uid, userProfile)
     } catch (error) {
       console.log(error);
       return;
     }
   }
 
-  deleteToken = async () => {
+  deleteProfile = async () => {
     try {
       await AsyncStorage.removeItem(this.state.uid)
     } catch (error) {
@@ -46,11 +42,10 @@ class Login extends Component {
         console.log(err);
         return;
       }
-      let sessionToken = JSON.stringify(token.idToken)
-      this.saveToken(sessionToken);
-      this.setState({ userToken: token, profile: profile });
+      this.saveProfile(profile);
+      this.props.getUser(profile);
       this.props.navigator.push({
-        component: Home,
+        component: Profile,
         title: 'Search for crimes',
         profile: this.state.profile,
         token: this.state.token
@@ -60,8 +55,7 @@ class Login extends Component {
 
   logout = async () => {
     try {
-      await this.deleteToken()
-      this.setState({ userToken: null, profile: null })
+      await this.deleteProfile()
     } catch (error) {
       console.log(error);
     }
@@ -79,7 +73,19 @@ class Login extends Component {
 
   getData() {
     this.props.fetchAllData('hello')
+    this.nflData()
   }
+
+  nflData() {
+    fetch('http://nflarrest.com/api/v1/team', {method: "GET"})
+      .then((response) => response.json())
+      .then((responseJson) => {
+        return console.log(responseJson);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    }
 
   render() {
     return (
@@ -102,7 +108,7 @@ class Login extends Component {
   }
 }
 
-  export default fetchDataContainer(Login)
+  export default getUserContainer(fetchDataContainer(Login))
 
 const styles = StyleSheet.create({
   container: {
