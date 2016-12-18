@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   Navigator,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableHighlight,
@@ -17,31 +18,6 @@ const routes = [
   { component: Home, title: 'Home' },
 ];
 
-export default class App extends Component {
-  constructor(props){
-    super(props);
-  }
-
-  render() {
-      return (
-        <Navigator style={styles.navigator}
-          initialRoute={routes[0]}
-          initialRouteStack={routes}
-          renderScene={(route, navigator) => {
-            let RouteComponent = route.component;
-            return (
-              <RouteComponent {...route} navigator={navigator} />
-            )
-          }}
-          navigationBar={
-             <Navigator.NavigationBar
-               style={ styles.nav }
-               routeMapper={NavigationBarRouteMapper} />
-             }
-        />
-    );
-  }
-}
 
 let NavigationBarRouteMapper = {
   LeftButton(route, navigator, index, navState) {
@@ -56,7 +32,7 @@ let NavigationBarRouteMapper = {
   },
 
   RightButton(route, navigator, index, navState) {
-    if(index > 0) {
+    if(index > 0 && index < 2) {
       return (
         <TouchableHighlight onPress={() => navigator.push(routes[index + 1])}>
           <Text style={styles.nextButton}>Next</Text>
@@ -67,11 +43,43 @@ let NavigationBarRouteMapper = {
   },
 
   Title(route, navigator, index, navState) {
-    return <Text style={ styles.navTitle }>NFL Arrest</Text>
+    return <Text style={ styles.navTitle }>NFL ARRESTS</Text>
   }
 };
 
+export default class App extends Component {
+  constructor(props){
+    super(props);
+  }
+
+  render() {
+    return (
+      <View style={styles.view}>
+      <StatusBar barStyle='light-content'/>
+      <Navigator style={styles.navigator}
+      initialRoute={routes[0]}
+      initialRouteStack={routes}
+      renderScene={(route, navigator) => {
+        let RouteComponent = route.component;
+        return (
+          <RouteComponent {...route} navigator={navigator} />
+        )
+      }}
+      navigationBar={
+        <Navigator.NavigationBar
+        style={ styles.nav }
+        routeMapper={NavigationBarRouteMapper} />
+      }
+      />
+     </View>
+    );
+  }
+}
+
 const styles = StyleSheet.create({
+  view: {
+    flex: 1,
+  },
   navigator: {
     flex: 1,
   },
@@ -79,7 +87,8 @@ const styles = StyleSheet.create({
     marginTop: 2,
     color: '#FFF',
     fontSize: 20,
-    paddingBottom: 3
+    paddingBottom: 3,
+    fontFamily: 'Marker Felt'
   },
   prevButton: {
     color: '#FFF',
@@ -95,6 +104,6 @@ const styles = StyleSheet.create({
   },
   nav: {
     height: 50,
-    backgroundColor: '#607D8B',
+    backgroundColor: '#003399',
   }
 });

@@ -91,16 +91,10 @@ class Login extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          HELLO
+          {"CRIME DOESN'T PLAY"}
         </Text>
-        <TouchableHighlight onPress={() => this.login()}>
-          <Text>Login</Text>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={() => this.logout()}>
-          <Text>Logout</Text>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={() => this.getData()}>
-          <Text>AsyncStorage</Text>
+        <TouchableHighlight style={styles.button} onPress={() => this.login()}>
+          <Text style={styles.buttonText}>Login</Text>
         </TouchableHighlight>
       </View>
     );
@@ -114,17 +108,31 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'white',
   },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
-    color: 'red',
+    color: '#003399',
+    fontFamily: 'Courier',
   },
   instructions: {
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
   },
+  button: {
+    height: 75,
+    width: 200,
+    backgroundColor: '#ff0000',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 30,
+  },
+  buttonText: {
+    fontSize: 25,
+    fontFamily: 'Copperplate-Bold',
+    color: '#fff'
+  }
 });
