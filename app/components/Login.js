@@ -102,7 +102,6 @@ class Login extends Component {
         <TouchableHighlight onPress={() => this.getData()}>
           <Text>AsyncStorage</Text>
         </TouchableHighlight>
-        <Text>{this.props.allData.allData}</Text>
       </View>
     );
   }
