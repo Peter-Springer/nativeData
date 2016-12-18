@@ -11,33 +11,34 @@ import Login from './Login';
 import Home from './Home'
 
 const routes = [
-  { component: Login, title: 'Login In' },
-  { component: Home, title: 'Search Records' }
-]
+  { component: Login, title: 'Login'},
+  { component: Home, title: 'Home' }
+];
 
 export default class App extends Component {
-  constructor(props) {
+  constructor(props){
     super(props);
   }
 
   render() {
-    return(
-      <Navigator style={styles.navigator}
-        initialRoute={routes[0]}
-        initialRouteStack={routes}
-        renderScene={(route, navigator) => {
-          let RouteComponent = route.component;
-          return (
-            <RouteComponent {...route} navigator={navigator} />
-          )
-        }}
-        navigatorBar={
-          <Navigator.NavigationBar
-            style={ styles.nav }
-            routeMapper={NavigationBarRouteMapper} />
-        }
-      />
-    )
+    // const {}
+      return (
+        <Navigator style={styles.navigator}
+          initialRoute={routes[0]}
+          initialRouteStack={routes}
+          renderScene={(route, navigator) => {
+            let RouteComponent = route.component;
+            return (
+              <RouteComponent {...route} navigator={navigator} />
+            )
+          }}
+          navigationBar={
+             <Navigator.NavigationBar
+               style={ styles.nav }
+               routeMapper={NavigationBarRouteMapper} />
+             }
+        />
+    );
   }
 }
 
@@ -46,7 +47,7 @@ let NavigationBarRouteMapper = {
     if(index > 0) {
       return (
         <TouchableHighlight onPress={() => navigator.pop()}>
-          <Text style={styles.prevButton}>Prev</Text>
+          <Text style={styles.prevButton}>Back</Text>
         </TouchableHighlight>
       )
     }
@@ -67,7 +68,6 @@ let NavigationBarRouteMapper = {
   Title(route, navigator, index, navState) {
     return <Text style={ styles.navTitle }>NFL Arrest</Text>
   }
-
 };
 
 const styles = StyleSheet.create({
@@ -75,21 +75,25 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   navTitle: {
-    marginTop:4,
-    fontSize:16,
+    marginTop: 2,
+    color: '#FFF',
+    fontSize: 20,
+    paddingBottom: 3
   },
   prevButton: {
-    fontSize: 16,
-    marginLeft:15,
-    marginTop:2,
+    color: '#FFF',
+   	fontSize: 16,
+    marginLeft: 15,
+    marginTop: 2,
   },
   nextButton: {
+    color: '#FFF',
     fontSize: 16,
-    marginRight:15,
-    marginTop:2,
+    marginRight: 15,
+    marginTop: 2,
   },
   nav: {
     height: 50,
-    backgroundColor: '#1E77E2',
+    backgroundColor: '#607D8B',
   }
 });

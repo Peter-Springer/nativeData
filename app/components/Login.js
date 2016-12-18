@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import {
-  AsyncStorage,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  View,
-} from 'react-native';
+import { AsyncStorage, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
 import Auth0Lock from 'react-native-lock';
 import credentials from '../../credentials';
 import Home from './Home';
@@ -79,7 +73,19 @@ class Login extends Component {
 
   getData() {
     this.props.fetchAllData('hello')
+    this.nflData()
   }
+
+  nflData() {
+    fetch('http://nflarrest.com/api/v1/team', {method: "GET"})
+      .then((response) => response.json())
+      .then((responseJson) => {
+        return console.log(responseJson);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    }
 
   render() {
     return (
