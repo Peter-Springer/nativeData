@@ -15,8 +15,18 @@ export default class CrimeByTeam extends Component {
     const { crime } = this.props
     return (
       <View style={styles.crimeData}>
-        <Text>{crime.Team} {crime.Team_name}</Text>
-        <Text>{crime.Name}</Text>
+        {(crime.Team)
+          ? <Text>{crime.Team} {crime.Team_name}</Text>
+          : null
+        }
+        {(crime.Name)
+          ? <Text>{crime.Name}</Text>
+          : null
+        }
+        {(crime.Category)
+          ? <Text>{crime.Category}</Text>
+          : null
+        }
         <Text>Arrest Count: {crime.arrest_count}</Text>
       </View>
     )
@@ -30,5 +40,6 @@ const styles = StyleSheet.create({
     margin: 3,
     flexDirection: 'column',
     backgroundColor: '#fff',
+    width: 300,
   }
 })

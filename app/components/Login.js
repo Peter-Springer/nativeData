@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { AsyncStorage, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
+import {
+  AsyncStorage,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  View} from 'react-native';
 import Auth0Lock from 'react-native-lock';
 import credentials from '../../credentials';
 import Profile from './Profile';
@@ -74,6 +81,9 @@ class Login extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Image
+          style={styles.logo}
+          source={require('../images/nflLogo.gif')}/>
         <Text style={styles.welcome}>
           {"CRIME DOESN'T PLAY"}
         </Text>
@@ -94,12 +104,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
   },
+  logo: {
+    height: 275,
+    width: 209,
+  },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
     color: '#003399',
-    fontFamily: 'Courier',
+    fontFamily: 'Damascus',
   },
   instructions: {
     textAlign: 'center',
@@ -108,15 +122,16 @@ const styles = StyleSheet.create({
   },
   button: {
     height: 75,
-    width: 200,
+    width: 250,
     backgroundColor: '#ff0000',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 30,
+    borderRadius: 10,
   },
   buttonText: {
     fontSize: 25,
-    fontFamily: 'Copperplate-Bold',
+    fontFamily: 'DamascusBold',
     color: '#fff'
   }
 });
