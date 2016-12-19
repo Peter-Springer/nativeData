@@ -12,6 +12,7 @@ import {
   Option,
 } from 'react-native-chooser';
 
+import fetchTeamDataContainer from '../containers/fetchTeamDataContainer';
 import fetchDataContainer from '../containers/fetchDataContainer';
 import CrimeByTeam from './CrimeByTeam';
 import DropDownArray from '../DropDownArray';
@@ -24,6 +25,17 @@ class Home extends Component{
       team: '',
 
     }
+  }
+
+  componentDidMount() {
+    fetch(`http://nflarrest.com/api/v1/team/`, {method: "GET"})
+      .then((response) => response.json())
+      .then((responseJson) => {
+        return this.props.fetchTeamData(responseJson);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   selectedTeam(teamName) {
@@ -43,6 +55,7 @@ class Home extends Component{
 
   render() {
     let data = this.props.allData.allData
+    let teamData = this.props.teamData.teamData
     if (!data) {
       return (
         <View style={styles.container}>
@@ -54,13 +67,23 @@ class Home extends Component{
             backdropStyle  = {{backgroundColor : "#d3d5d6"}}
             optionListStyle = {{backgroundColor : "#F5FCFF"}}
           >
-              {DropDownArray.map((team, i) => <Option value={team.id} key={i}>{team.name}</Option>)}
+              {DropDownArray.map((team, i) =>
+                <Option value={team.id} key={i}>{team.name}</Option>)}
             </Select>
           <TouchableHighlight
             onPress={() => this.nflData('topPlayers', this.state.team)}
             style={styles.button}>
             <Text style={styles.buttonText}>Get Data</Text>
           </TouchableHighlight>
+          {(!teamData)
+            ? null
+            : <ScrollView
+                style={styles.scrollView}>
+                {teamData.map(function(crime, i) {
+                  return <CrimeByTeam key={i} crime={crime} />}
+                )}
+              </ScrollView>
+          }
         </View>
       )
     } else {
@@ -74,7 +97,8 @@ class Home extends Component{
             backdropStyle  = {{backgroundColor : "#d3d5d6"}}
             optionListStyle = {{backgroundColor : "#F5FCFF"}}
           >
-              {DropDownArray.map((team, i) => <Option value={team.id} key={i}>{team.name}</Option>)}
+              {DropDownArray.map((team, i) =>
+                <Option value={team.id} key={i}>{team.name}</Option>)}
             </Select>
           <TouchableHighlight
             onPress={() => this.nflData('topPlayers', this.state.team)}
@@ -93,7 +117,7 @@ class Home extends Component{
   }
 }
 
-export default fetchDataContainer(Home)
+export default fetchDataContainer(fetchTeamDataContainer(Home))
 
 const styles = StyleSheet.create({
   container: {
