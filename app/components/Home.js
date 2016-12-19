@@ -14,6 +14,7 @@ import {
 
 import fetchDataContainer from '../containers/fetchDataContainer';
 import CrimeByTeam from './CrimeByTeam';
+import DropDownArray from '../DropDownArray';
 
 
 class Home extends Component{
@@ -48,13 +49,12 @@ class Home extends Component{
           <Select
             onSelect={this.selectedTeam.bind(this)}
             defaultText="Select A Team ..."
-            style = {{borderWidth : 1, borderColor : "green"}}
+            style = {{borderWidth : 1, borderColor : "#ff0000"}}
             textStyle = {{}}
             backdropStyle  = {{backgroundColor : "#d3d5d6"}}
             optionListStyle = {{backgroundColor : "#F5FCFF"}}
           >
-              <Option value={'den'}>Denver</Option>
-              <Option value={'sea'}>Seattle</Option>
+              {DropDownArray.map((team, i) => <Option value={team.id} key={i}>{team.name}</Option>)}
             </Select>
           <TouchableHighlight
             onPress={() => this.nflData('topPlayers', this.state.team)}
@@ -66,6 +66,16 @@ class Home extends Component{
     } else {
       return (
         <View style={styles.container}>
+          <Select
+            onSelect={this.selectedTeam.bind(this)}
+            defaultText="Select A Team ..."
+            style = {{borderWidth : 1, borderColor : "#ff0000"}}
+            textStyle = {{}}
+            backdropStyle  = {{backgroundColor : "#d3d5d6"}}
+            optionListStyle = {{backgroundColor : "#F5FCFF"}}
+          >
+              {DropDownArray.map((team, i) => <Option value={team.id} key={i}>{team.name}</Option>)}
+            </Select>
           <TouchableHighlight
             onPress={() => this.nflData('topPlayers', this.state.team)}
             style={styles.button}>
