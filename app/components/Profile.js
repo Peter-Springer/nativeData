@@ -21,9 +21,10 @@ class Profile extends Component {
      return (
        console.log(user),
        <View style={styles.container}>
+        <Text style={styles.title}>Profile:</Text>
         <Image style={styles.avatar} source={{uri: user.picture}}/>
-         <Text>{user.name}</Text>
-         <Text>{user.email}</Text>
+        <Text style={styles.userName}>{user.name}</Text>
+        <Text style={styles.userEmail}>{user.email}</Text>
        </View>
      )
    } else {
@@ -45,9 +46,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
   },
+  title: {
+    fontFamily: 'DamascusBold',
+    fontSize: 60,
+    color: '#FF0000',
+    marginBottom: 30,
+  },
   avatar: {
     height: 150,
     width: 150,
     borderRadius: 75,
+  },
+  userName: {
+    color: '#003399',
+    fontFamily: 'DamascusBold',
+    fontSize: 30,
+    marginTop: 30,
+  },
+  userEmail: {
+    color: '#003399',
+    fontFamily: 'Damascus',
+    fontSize: 15,
+    marginTop: 10,
   }
 })

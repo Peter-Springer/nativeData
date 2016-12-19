@@ -44,7 +44,6 @@ class Home extends Component{
     let data = this.props.allData.allData
     if (!data) {
       return (
-        console.log(this.state),
         <View style={styles.container}>
           <Select
             onSelect={this.selectedTeam.bind(this)}
@@ -57,17 +56,20 @@ class Home extends Component{
               <Option value={'den'}>Denver</Option>
               <Option value={'sea'}>Seattle</Option>
             </Select>
-          <TouchableHighlight onPress={() => this.nflData('topPlayers', this.state.team)}>
-            <Text>Get Data</Text>
+          <TouchableHighlight
+            onPress={() => this.nflData('topPlayers', this.state.team)}
+            style={styles.button}>
+            <Text style={styles.buttonText}>Get Data</Text>
           </TouchableHighlight>
         </View>
       )
     } else {
       return (
         <View style={styles.container}>
-          <Text>Home</Text>
-          <TouchableHighlight onPress={() => this.nflData('topPlayers', this.state.team)}>
-            <Text>Get Data</Text>
+          <TouchableHighlight
+            onPress={() => this.nflData('topPlayers', this.state.team)}
+            style={styles.button}>
+            <Text style={styles.buttonText}>Get Data</Text>
           </TouchableHighlight>
           <ScrollView
             style={styles.scrollView}>
@@ -86,13 +88,26 @@ export default fetchDataContainer(Home)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    top: 100,
-    justifyContent: 'center',
+    top: 70,
     alignItems: 'center',
     backgroundColor: '#fff',
   },
+  button: {
+    height: 30,
+    width: 200,
+    backgroundColor: '#ff0000',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+    borderRadius: 10,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 15,
+  },
   scrollView: {
     top: 20,
-    height: 400,
+    height: 100,
+    marginBottom: 10,
   }
 })
