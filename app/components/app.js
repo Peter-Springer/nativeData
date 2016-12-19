@@ -11,11 +11,13 @@ import {
 import Login from './Login';
 import Home from './Home';
 import Profile from './Profile';
+import Visuals from './Visuals';
 
 const routes = [
   { component: Login, title: 'Login'},
   { component: Profile, title: 'Profile' },
   { component: Home, title: 'Home' },
+  { component: Visuals, title: 'Visuals' },
 ];
 
 
@@ -32,7 +34,7 @@ let NavigationBarRouteMapper = {
   },
 
   RightButton(route, navigator, index, navState) {
-    if(index > 0 && index < 2) {
+    if(index > 0 && index < 3) {
       return (
         <TouchableHighlight onPress={() => navigator.push(routes[index + 1])}>
           <Text style={styles.nextButton}>Next</Text>

@@ -19,7 +19,6 @@ class Profile extends Component {
    const { user } = this.props.user
    if (user) {
      return (
-       console.log(user),
        <View style={styles.container}>
         <Text style={styles.title}>Profile:</Text>
         <Image style={styles.avatar} source={{uri: user.picture}}/>
