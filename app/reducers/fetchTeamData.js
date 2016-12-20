@@ -1,13 +1,12 @@
+import Immutable, { List } from 'immutable'
 import * as types from '../actions/actionTypes'
 
-const teamData = (state = [], action) => {
+const teamData = (state = Immutable.List([]), action) => {
   switch(action.type) {
     case 'FETCH_TEAM_DATA':
-    return Object.assign({}, state, { teamData: action.teamData})
-
-    default:
-      return state;
+    return Immutable.List(action.teamData)
   }
+  return state;
 };
 
 export default teamData;

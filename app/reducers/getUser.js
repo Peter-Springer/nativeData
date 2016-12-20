@@ -1,13 +1,12 @@
+import Immutable, { Map } from 'immutable'
 import * as types from '../actions/actionTypes'
 
-const user = (state = {}, action) => {
+const user = (state = Immutable.Map({}), action) => {
   switch(action.type) {
     case 'GET_USER':
-    return Object.assign({}, state, { user: action.user})
-
-    default:
-      return state;
+    return Immutable.Map(action.user)
   }
+  return state;
 };
 
 export default user;

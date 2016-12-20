@@ -15,19 +15,9 @@ export default class CrimeByTeam extends Component {
     const { crime } = this.props
     return (
       <View style={styles.crimeData}>
-        {(crime.Team)
-          ? <Text>{crime.Team} {crime.Team_name}</Text>
-          : null
-        }
-        {(crime.Name)
-          ? <Text>{crime.Name}</Text>
-          : null
-        }
-        {(crime.Category)
-          ? <Text>{crime.Category}</Text>
-          : null
-        }
-        <Text>Arrest Count: {crime.arrest_count}</Text>
+        <Text>Player Name: {crime.Name}</Text>
+        <Text>Crime: {crime.Category}</Text>
+        <Text>Date: {crime.Date}</Text>
       </View>
     )
   }
