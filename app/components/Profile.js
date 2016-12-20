@@ -18,7 +18,6 @@ class Profile extends Component {
 
  render() {
    const user = this.props.user.toJS()
-   console.log(user)
    if (user) {
      return (
        <View style={styles.container}>

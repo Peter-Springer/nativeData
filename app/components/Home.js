@@ -23,7 +23,6 @@ class Home extends Component{
     super(props)
     this.state = {
       team: '',
-
     }
   }
 
