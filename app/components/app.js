@@ -9,15 +9,15 @@ import {
 } from 'react-native';
 
 import Login from './Login';
-import Home from './Home';
+import Search from './Search';
 import Profile from './Profile';
 import TeamVisual from './TeamVisual';
 
 const routes = [
   { component: Login, title: 'Login'},
   { component: Profile, title: 'Profile' },
-  { component: Home, title: 'Home' },
   { component: TeamVisual, title: 'TeamVisual' },
+  { component: Search, title: 'Search' },
 ];
 
 
