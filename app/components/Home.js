@@ -16,6 +16,7 @@ import fetchTeamDataContainer from '../containers/fetchTeamDataContainer';
 import fetchDataContainer from '../containers/fetchDataContainer';
 import CrimeByTeam from './CrimeByTeam';
 import DropDownArray from '../DropDownArray';
+import TeamVisual from './TeamVisual';
 
 
 class Home extends Component{
@@ -74,6 +75,7 @@ class Home extends Component{
             style={styles.button}>
             <Text style={styles.buttonText}>Get Data</Text>
           </TouchableHighlight>
+          <TeamVisual />
         </View>
       )
     } else {
