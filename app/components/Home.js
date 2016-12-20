@@ -16,6 +16,7 @@ import fetchTeamDataContainer from '../containers/fetchTeamDataContainer';
 import fetchDataContainer from '../containers/fetchDataContainer';
 import CrimeByTeam from './CrimeByTeam';
 import DropDownArray from '../DropDownArray';
+import TeamVisual from './TeamVisual';
 
 
 class Home extends Component{
@@ -23,7 +24,6 @@ class Home extends Component{
     super(props)
     this.state = {
       team: '',
-
     }
   }
 
@@ -42,8 +42,8 @@ class Home extends Component{
     this.setState({ team: teamName })
   }
 
-  nflData(arg1='', arg2='') {
-    fetch(`http://nflarrest.com/api/v1/team/${arg1}/${arg2}`, {method: "GET"})
+  nflData(arg1='') {
+    fetch(`http://nflarrest.com/api/v1/team/arrests/${arg1}`, {method: "GET"})
       .then((response) => response.json())
       .then((responseJson) => {
         return this.props.fetchAllData(responseJson);
@@ -54,8 +54,8 @@ class Home extends Component{
     }
 
   render() {
-    let data = this.props.allData.allData
-    let teamData = this.props.teamData.teamData
+    let data = this.props.allData.toJS()
+    let teamData = this.props.teamData.toJS()
     if (!data) {
       return (
         <View style={styles.container}>
@@ -71,19 +71,11 @@ class Home extends Component{
                 <Option value={team.id} key={i}>{team.name}</Option>)}
             </Select>
           <TouchableHighlight
-            onPress={() => this.nflData('topPlayers', this.state.team)}
+            onPress={() => this.nflData(this.state.team)}
             style={styles.button}>
             <Text style={styles.buttonText}>Get Data</Text>
           </TouchableHighlight>
-          {(!teamData)
-            ? null
-            : <ScrollView
-                style={styles.scrollView}>
-                {teamData.map(function(crime, i) {
-                  return <CrimeByTeam key={i} crime={crime} />}
-                )}
-              </ScrollView>
-          }
+          <TeamVisual />
         </View>
       )
     } else {
@@ -101,14 +93,14 @@ class Home extends Component{
                 <Option value={team.id} key={i}>{team.name}</Option>)}
             </Select>
           <TouchableHighlight
-            onPress={() => this.nflData('topPlayers', this.state.team)}
+            onPress={() => this.nflData(this.state.team)}
             style={styles.button}>
             <Text style={styles.buttonText}>Get Data</Text>
           </TouchableHighlight>
           <ScrollView
             style={styles.scrollView}>
-            {data.map(function(crime, i) {
-              return <CrimeByTeam key={i} crime={crime} />}
+            {data.map((crime, i) =>
+              <CrimeByTeam key={i} crime={crime} />
             )}
           </ScrollView>
         </View>
@@ -125,6 +117,7 @@ const styles = StyleSheet.create({
     top: 70,
     alignItems: 'center',
     backgroundColor: '#fff',
+    height: 200,
   },
   button: {
     height: 30,
@@ -141,7 +134,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     top: 20,
-    height: 100,
+    height: 50,
     marginBottom: 10,
   }
 })

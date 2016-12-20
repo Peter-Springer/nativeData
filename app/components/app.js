@@ -11,13 +11,13 @@ import {
 import Login from './Login';
 import Home from './Home';
 import Profile from './Profile';
-import Visuals from './Visuals';
+import TeamVisual from './TeamVisual';
 
 const routes = [
   { component: Login, title: 'Login'},
   { component: Profile, title: 'Profile' },
   { component: Home, title: 'Home' },
-  { component: Visuals, title: 'Visuals' },
+  { component: TeamVisual, title: 'TeamVisual' },
 ];
 
 

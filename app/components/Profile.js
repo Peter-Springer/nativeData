@@ -5,6 +5,7 @@ import {
  Text,
  View,
 } from 'react-native';
+import Immutable from 'immutable'
 
 import getUserContainer from '../containers/getUserContainer'
 
@@ -16,7 +17,7 @@ class Profile extends Component {
  }
 
  render() {
-   const { user } = this.props.user
+   const user = this.props.user.toJS()
    if (user) {
      return (
        <View style={styles.container}>
