@@ -41,7 +41,7 @@ let NavigationBarRouteMapper = {
         </TouchableHighlight>
       )
     }
-    else { return null }
+    return null
   },
 
   Title(route, navigator, index, navState) {

@@ -63,33 +63,27 @@ class TeamVisual extends Component {
     if(this.props.teamData.toJS().length > 0
     && this.props.crimeData.toJS().length > 0
     && this.props.positionData.toJS().length > 0) {
-      let array3 = []
-      let array2 = []
-      let array = []
-      const crimeData = this.props.crimeData.toJS().map( data =>
-        Object.create({ name: data.Category, count: parseInt(data.arrest_count) }))
-      const teamData = this.props.teamData.toJS().map( data =>
-        Object.create({ name: data.Team_name, count: parseInt(data.arrest_count) }))
-      const positionData = this.props.positionData.toJS().map( data =>
-        Object.create({ name: data.Position, count: parseInt(data.arrest_count) }))
-      array.push(teamData)
-      array2.push(crimeData.splice(0, 15))
-      array3.push(positionData)
+      const crimeData = [this.props.crimeData.toJS().map( data =>
+        ({ name: data.Category, count: parseInt(data.arrest_count) }))]
+      const teamData = [this.props.teamData.toJS().map( ({ Team_name, arrest_count }) =>
+        ({ name: Team_name, count: parseInt(arrest_count) }))]
+      const positionData = [this.props.positionData.toJS().map( data =>
+        ({ name: data.Position, count: parseInt(data.arrest_count) }))]
       return (
         <ScrollView style={styles.container}>
           <Text style={styles.title}>Arrests Per Team:</Text>
           <Bar
-            data={array}
+            data={teamData}
             options={options}
             accessorKey="count" />
           <Text style={styles.title}>Top 15 Arrest Categories:</Text>
           <Bar
-            data={array2}
+            data={crimeData}
             options={options}
             accessorKey="count" />
           <Text style={styles.title}>Arrests Per Position:</Text>
           <Bar
-            data={array3}
+            data={positionData}
             options={options}
             accessorKey="count" />
         </ScrollView>

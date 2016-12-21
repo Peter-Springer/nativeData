@@ -1,10 +1,10 @@
-import Immutable, { List } from 'immutable'
+import { List } from 'immutable'
 import * as types from '../actions/actionTypes'
 
-const crimeData = (state = Immutable.List([]), action) => {
+const crimeData = (state = List([]), action) => {
   switch(action.type) {
     case 'FETCH_CRIME_DATA':
-    return Immutable.List(action.crimeData)
+    return List(action.crimeData)
   }
   return state;
 };
