@@ -16,30 +16,6 @@ import getUserContainer from '../containers/getUserContainer';
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      userToken: null,
-      profile: null,
-      uid: 'uid904837920',
-
-    };
-  }
-
-  saveProfile = async (profile) => {
-      let userProfile = JSON.stringify(profile)
-    try {
-      await AsyncStorage.setItem(this.state.uid, userProfile)
-    } catch (error) {
-      console.log(error);
-      return;
-    }
-  }
-
-  deleteProfile = async () => {
-    try {
-      await AsyncStorage.removeItem(this.state.uid)
-    } catch (error) {
-      console.log(error);
-    }
   }
 
   login() {
@@ -49,33 +25,12 @@ class Login extends Component {
         console.log(err);
         return;
       }
-      this.saveProfile(profile);
       this.props.getUser(profile);
       this.props.navigator.push({
         component: Profile,
         title: 'Search for crimes',
-        profile: this.state.profile,
-        token: this.state.token
       });
     })
-  }
-
-  logout = async () => {
-    try {
-      await this.deleteProfile()
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  getItem = async () => {
-    try {
-      await AsyncStorage.getItem(this.state.uid, (err, result) => {
-        console.log(result);
-      })
-    } catch (error) {
-      console.log(error);
-    }
   }
 
   render() {
@@ -87,7 +42,10 @@ class Login extends Component {
         <Text style={styles.welcome}>
           {"CRIME DOESN'T PLAY"}
         </Text>
-        <TouchableHighlight style={styles.button} onPress={() => this.login()}>
+        <TouchableHighlight
+          style={styles.button}
+          onPress={() => this.login()}
+        >
           <Text style={styles.buttonText}>Login</Text>
         </TouchableHighlight>
       </View>
@@ -95,7 +53,7 @@ class Login extends Component {
   }
 }
 
-  export default getUserContainer(fetchDataContainer(Login))
+export default getUserContainer(fetchDataContainer(Login))
 
 const styles = StyleSheet.create({
   container: {
@@ -132,6 +90,6 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 25,
     fontFamily: 'DamascusBold',
-    color: '#fff'
+    color: '#fff',
   }
 });

@@ -13,13 +13,14 @@ import {
 } from 'react-native-chooser';
 
 import fetchTeamDataContainer from '../containers/fetchTeamDataContainer';
+import fetchPositionDataContainer from '../containers/fetchPositionDataContainer';
+import fetchCrimeDataContainer from '../containers/fetchCrimeDataContainer';
 import fetchDataContainer from '../containers/fetchDataContainer';
 import CrimeByTeam from './CrimeByTeam';
 import DropDownArray from '../DropDownArray';
-import TeamVisual from './TeamVisual';
 
 
-class Home extends Component{
+class Search extends Component{
   constructor(props) {
     super(props)
     this.state = {
@@ -35,7 +36,25 @@ class Home extends Component{
       })
       .catch((error) => {
         console.error(error);
-      });
+    });
+
+      fetch(`http://nflarrest.com/api/v1/crime/`, {method: "GET"})
+        .then((response) => response.json())
+        .then((responseJson) => {
+          return this.props.fetchCrimeData(responseJson);
+        })
+        .catch((error) => {
+          console.error(error);
+    });
+
+    fetch(`http://nflarrest.com/api/v1/position/`, {method: "GET"})
+      .then((response) => response.json())
+      .then((responseJson) => {
+        return this.props.fetchPositionData(responseJson);
+      })
+      .catch((error) => {
+        console.error(error);
+  });
   }
 
   selectedTeam(teamName) {
@@ -55,7 +74,7 @@ class Home extends Component{
 
   render() {
     let data = this.props.allData.toJS()
-    let teamData = this.props.teamData.toJS()
+    // let teamData = this.props.teamData.toJS()
     if (!data) {
       return (
         <View style={styles.container}>
@@ -75,7 +94,6 @@ class Home extends Component{
             style={styles.button}>
             <Text style={styles.buttonText}>Get Data</Text>
           </TouchableHighlight>
-          <TeamVisual />
         </View>
       )
     } else {
@@ -109,7 +127,13 @@ class Home extends Component{
   }
 }
 
-export default fetchDataContainer(fetchTeamDataContainer(Home))
+export default fetchDataContainer(
+  fetchTeamDataContainer(
+    fetchCrimeDataContainer(
+      fetchPositionDataContainer(Search)
+    )
+  )
+)
 
 const styles = StyleSheet.create({
   container: {
